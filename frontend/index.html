@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Backup App</title>
+</head>
+<body>
+  <h1>Flask Backup App</h1>
+
+  <input type="text" id="messageInput" placeholder="Enter your message" />
+  <button onclick="writeData()">Write Data</button>
+  <button onclick="fetchData()">Fetch Data</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    async function writeData() {
+      const message = document.getElementById("messageInput").value;
+
+      try {
+        const res = await fetch('/api/write', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await res.json();
+        document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+      } catch (error) {
+        document.getElementById('output').innerText = "Error writing data: " + error;
+      }
+    }
+
+    async function fetchData() {
+      try {
+        const res = await fetch('/api/data');
+        const data = await res.json();
+        document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+      } catch (error) {
+        document.getElementById('output').innerText = "Error fetching data: " + error;
+      }
+    }
+  </script>
+</body>
+</html>
+
