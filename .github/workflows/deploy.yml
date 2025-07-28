@@ -1,4 +1,4 @@
-name: CI/CD Build & Deploy
+name: CI/CD Build & Push Docker Images
 
 on:
   push:
@@ -11,7 +11,7 @@ env:
   FRONTEND_IMAGE: shadyemad/flask-devops-platform-frontend
 
 jobs:
-  build-and-deploy:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,21 +36,4 @@ jobs:
       run: |
         docker build -t $FRONTEND_IMAGE:latest ./frontend
         docker push $FRONTEND_IMAGE:latest
-
-    - name: Decode kubeconfig and setup kubectl
-      run: |
-        echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > kubeconfig
-        export KUBECONFIG=$PWD/kubeconfig
-        kubectl get nodes
-
-    - name: Apply Kubernetes manifests
-      run: |
-        export KUBECONFIG=$PWD/kubeconfig
-        kubectl apply -f k8s/
-
-    - name: Rollout restart backend and frontend
-      run: |
-        export KUBECONFIG=$PWD/kubeconfig
-        kubectl rollout restart deployment/backend
-        kubectl rollout restart deployment/frontend
 
