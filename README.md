@@ -146,6 +146,11 @@ Use the manifests in `k8s/` if you want to deploy manually to a cluster.
 ```bash
 kubectl apply -f k8s/
 ```
+🔐 Kubernetes Secrets
+kubectl create secret generic s3-creds \
+  --from-literal=AWS_ACCESS_KEY_ID=your-access-key-id \
+  --from-literal=AWS_SECRET_ACCESS_KEY=your-secret-access-key
+
 
 > 🧪 Kubernetes deployment is not handled in the current CI/CD workflow.
 
