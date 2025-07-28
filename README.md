@@ -1,108 +1,169 @@
-# Flask DevOps Platform 🚀
+# 🚀 Flask DevOps Platform
 
-A full-stack DevOps-ready application built with:
+![Overview](images/overview.png)
 
-- 🐍 **Flask** backend with AWS S3 integration (for storing backups)
-- 🌐 **Frontend** with static HTML & JS
-- 🐳 **Dockerized** components for both frontend and backend
-- ☸️ **Kubernetes** deployments for scalable container orchestration
-- ☁️ **AWS S3** as a storage backend
-- ⚙️ **Terraform** to provision S3 and IAM resources
-- 🔄 **GitHub Actions** CI/CD pipeline for build, push, and deployment
-- 📦 Optional: `restore-backup.sh` script to pull backup data from S3
+A full-stack DevOps project featuring a Flask backend and static frontend, built with Docker and GitHub Actions for CI/CD, includes an AWS S3 restore script, Terraform infrastructure provisioning, and Kubernetes manifests (optional).
 
 ---
 
-## 📁 Project Structure
+## 📸 Screenshots
+
+### 🖥️ Frontend  
+![Frontend](images/frontend.png)
+
+### ⚙️ Backend Console  
+![Backend](images/backend.png)
+
+### ♻️ Restore Script in Action  
+![Restore](images/restore-script.png)
+
+### 🤖 GitHub Actions Workflow  
+![CI/CD](images/github-actions.png)
+
+> 📂 Place all screenshots in a folder named `images/` at the root of the repository.
+
+---
+
+## 🧾 Project Structure
 
 ```
-flask-devops-platform/
-├── backend/                 # Flask backend app with boto3 + S3
-├── frontend/                # Static frontend with HTML/JS
-├── k8s/                     # Kubernetes deployment & ingress YAMLs
-├── terraform/               # Terraform scripts to provision AWS S3 and IAM
-├── .github/workflows/       # GitHub Actions CI/CD workflows
-├── restore-backup.sh        # Shell script to restore S3 backup locally
+.
+├── backend/                  # Flask backend (Dockerized)
+│   ├── app.py
+│   ├── Dockerfile
+│   ├── data.json
+│   └── requirements.txt
+├── frontend/                 # Static frontend (Dockerized)
+│   ├── index.html
+│   └── Dockerfile
+├── .github/workflows/        # GitHub Actions CI/CD pipeline
+│   └── deploy.yml
+├── terraform/                # Infrastructure as Code (Terraform)
+│   ├── main.tf
+│   ├── backend.tf
+│   ├── provider.tf
+│   └── .terraform.lock.hcl
+├── k8s/                      # Kubernetes manifests (optional)
+│   ├── backend-deployment.yaml
+│   ├── frontend-deployment.yaml
+│   └── ingress.yaml
+├── s3-restore-script/        # AWS S3 restore utility
+│   ├── .env
+│   ├── restore-backup.sh
+│   └── restored_backup.json
+├── images/                   # Project screenshots (not included in code)
 └── README.md
 ```
 
 ---
 
-## ⚙️ Prerequisites
+## ✅ Features
 
-- AWS account with S3 access
-- Docker & Docker Hub account
-- Kubernetes cluster (Minikube, K3s, or EKS)
-- Terraform installed
-- GitHub repository with secrets set up
+- ✅ Flask backend with data served from `data.json`
+- ✅ Static HTML frontend
+- ✅ Dockerized backend and frontend
+- ✅ GitHub Actions for CI/CD pipeline
+- ✅ AWS S3 restore script
+- ✅ Infrastructure as Code via Terraform
+- ✅ Kubernetes manifests 
 
 ---
 
-## 🚀 How to Run Locally (Optional)
+## 🔁 CI/CD Pipeline
+
+GitHub Actions Workflow:
+- Triggered on `push` to `main` or manual dispatch
+- Builds Docker images for backend and frontend
+- Pushes to DockerHub
+
+```yaml
+docker build -t shadyemad/flask-devops-platform-backend ./backend
+docker build -t shadyemad/flask-devops-platform-frontend ./frontend
+docker push shadyemad/flask-devops-platform-backend
+docker push shadyemad/flask-devops-platform-frontend
+```
+
+> 🚫 Kubeconfig and Kubernetes deployment steps were removed for simplicity
+
+---
+
+## ☁️ AWS S3 Restore Script
+
+Shell script to restore `data.json` backup from AWS S3.
+
+**Run:**
 
 ```bash
-# Run backend
-cd backend
-docker build -t flask-backend .
-docker run -p 5000:5000 flask-backend
+cd s3-restore-script
+bash restore-backup.sh
+```
 
-# Run frontend
-cd ../frontend
-docker build -t flask-frontend .
-docker run -p 8080:80 flask-frontend
+**Configure `.env`:**
+
+```env
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+S3_BUCKET_NAME=your_bucket_name
 ```
 
 ---
 
-## ☸️ Kubernetes Deployment
+## 🐳 Docker Images
+
+| Component | DockerHub Repo |
+|-----------|----------------|
+| Backend   | `shadyemad/flask-devops-platform-backend` |
+| Frontend  | `shadyemad/flask-devops-platform-frontend` |
+
+---
+
+## 🔐 GitHub Secrets
+
+| Secret Name           | Description              |
+|------------------------|--------------------------|
+| `DOCKERHUB_USERNAME`   | Your DockerHub username  |
+| `DOCKERHUB_TOKEN`      | DockerHub PAT/token      |
+
+---
+
+## 🛠️ Terraform Usage
+
+```bash
+cd terraform
+terraform init
+terraform apply
+```
+
+Creates infrastructure as defined in `main.tf`, `provider.tf`, and `backend.tf`.
+
+---
+
+## ☸️ Kubernetes 
+
+Use the manifests in `k8s/` if you want to deploy manually to a cluster.
 
 ```bash
 kubectl apply -f k8s/
 ```
 
-Make sure to set up:
-- Kubernetes secret for AWS credentials (`aws-secret`)
-- NGINX ingress controller
-- DNS entry for `flask.local` if needed
+> 🧪 Kubernetes deployment is not handled in the current CI/CD workflow.
 
 ---
 
-## 📦 S3 Restore Script
+## 👤 Author
 
-```bash
-chmod +x restore-backup.sh
-./restore-backup.sh
-```
-
-Make sure to export your AWS credentials before running.
+**Shady Emad Wahib Farhat**   
+🔗 GitHub: [shadyemad2](https://github.com/shadyemad2)
 
 ---
 
-## 🔄 CI/CD with GitHub Actions
+## 📌 Project Status
 
-Every push to `main` branch will:
-
-- Build backend and frontend Docker images
-- Push them to Docker Hub
-- Restart deployments on your Kubernetes cluster
-- Send a Slack alert (if webhook is configured)
-
----
-
-## 🔐 GitHub Secrets Required
-
-| Secret Name          | Purpose                          |
-|----------------------|----------------------------------|
-| DOCKERHUB_USERNAME   | Your Docker Hub username         |
-| DOCKERHUB_TOKEN      | Docker Hub access token          |
-| SLACK_WEBHOOK_URL    | Slack webhook for notifications  |
-| KUBECONFIG_DATA      | Base64-encoded kubeconfig file   |
-
----
-
-## 📬 Contact
-
-Made with 💻 by [Shady Emad](https://github.com/shadyemad2)
+- ✅ Working CI/CD via GitHub Actions
+- ✅ Verified AWS S3 Restore
+- ✅ Docker builds and image publishing
+- ✅ Kubernetes manifests present (manual)
+- ✅ Infrastructure via Terraform
 
 ---
 
