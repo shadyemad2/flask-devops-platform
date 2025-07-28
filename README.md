@@ -8,14 +8,14 @@ A full-stack DevOps project featuring a Flask backend and static frontend, built
 
 ## 📸 Screenshots
 
-### 🖥️ Frontend  
-![Frontend](images/frontend.png)
+### 🖥️ Frontend&Backend
+<img width="709" height="588" alt="frontend backend" src="https://github.com/user-attachments/assets/429088b0-e21d-44b1-9789-7389bbce234b" />
 
-### ⚙️ Backend Console  
-![Backend](images/backend.png)
+### Backup To S3
+<img width="1427" height="696" alt="bucket" src="https://github.com/user-attachments/assets/a29c7e2e-0ef9-4942-9539-c76065c60676" />
 
 ### ♻️ Restore Script in Action  
-![Restore](images/restore-script.png)
+<img width="1002" height="333" alt="restore-script" src="https://github.com/user-attachments/assets/2df14765-475a-4fc3-8ba2-0578690e6403" />
 
 ### 🤖 GitHub Actions Workflow  
 ![CI/CD](images/github-actions.png)
