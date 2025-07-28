@@ -18,7 +18,8 @@ A full-stack DevOps project featuring a Flask backend and static frontend, built
 <img width="1002" height="333" alt="restore-script" src="https://github.com/user-attachments/assets/2df14765-475a-4fc3-8ba2-0578690e6403" />
 
 ### 🤖 GitHub Actions Workflow  
-![CI/CD](images/github-actions.png)
+<img width="1905" height="747" alt="githup-actions" src="https://github.com/user-attachments/assets/b06dbfea-8f8e-47f2-9425-53df4a2252b9" />
+
 
 > 📂 Place all screenshots in a folder named `images/` at the root of the repository.
 
