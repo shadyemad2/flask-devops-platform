@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 env:
   BACKEND_IMAGE: shadyemad/flask-devops-platform-backend
@@ -41,6 +42,11 @@ jobs:
         echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > kubeconfig
         export KUBECONFIG=$PWD/kubeconfig
         kubectl get nodes
+
+    - name: Apply Kubernetes manifests
+      run: |
+        export KUBECONFIG=$PWD/kubeconfig
+        kubectl apply -f k8s/
 
     - name: Rollout restart backend and frontend
       run: |

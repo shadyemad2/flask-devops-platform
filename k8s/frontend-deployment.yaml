@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: shadyemad/flask-devops-platform-frontend:latest  # غيّر لو الاسم مختلف
+        image: shadyemad/flask-devops-platform-frontend:latest
         ports:
         - containerPort: 80
 ---

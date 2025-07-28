@@ -16,6 +16,16 @@ resource "aws_s3_bucket_versioning" "backup_versioning" {
   }
 }
 
+# Block Public Access = false to allow applying the policy
+resource "aws_s3_bucket_public_access_block" "public_access" {
+  bucket = aws_s3_bucket.backup_bucket.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
 resource "aws_s3_bucket_policy" "backup_policy" {
   bucket = aws_s3_bucket.backup_bucket.id
 
@@ -25,7 +35,7 @@ resource "aws_s3_bucket_policy" "backup_policy" {
       {
         Sid       = "AllowReadWriteAccess",
         Effect    = "Allow",
-        Principal = "*",  # Consider using IAM user or role ARN
+        Principal = "*",  # Consider using specific IAM role/user for tighter security
         Action    = [
           "s3:GetObject",
           "s3:PutObject"
