@@ -1,6 +1,7 @@
 # 🚀 Flask DevOps Platform
 
-![Overview](images/overview.png)
+<img width="2048" height="2048" alt="Gemini_Generated_Image_lostk9lostk9lost (1)" src="https://github.com/user-attachments/assets/afa6e4ba-aeec-4510-bcbb-773434671093" />
+
 
 A full-stack DevOps project featuring a Flask backend and static frontend, built with Docker and GitHub Actions for CI/CD, includes an AWS S3 restore script, Terraform infrastructure provisioning, and Kubernetes manifests (optional).
 
